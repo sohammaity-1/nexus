@@ -1,8 +1,29 @@
 # Nexus
 
+## Project Status
+
+🚧 **Active Development**
+
+**Current Phase:** Phase 2 – Identity & Access Management
+
+### Completed
+
+* Phase 0 – Project Inception
+* Phase 1 – Foundation & Platform Bootstrap
+
+### In Progress
+
+* Phase 2 – Identity & Access Management
+
+---
+
+## Overview
+
 Nexus is an Internal Developer Platform (IDP) built to provide a centralized platform for managing projects, repositories, builds, deployments, monitoring, and operational workflows.
 
-The project serves as a hands-on learning initiative focused on enterprise-grade backend development, platform engineering, cloud-native architecture, security, CI/CD, observability, and infrastructure automation.
+The project serves as a hands-on initiative focused on enterprise-grade backend development, platform engineering, cloud-native architecture, security, CI/CD, observability, and infrastructure automation.
+
+Unlike traditional CRUD applications, Nexus is being developed using production-oriented engineering practices, emphasizing scalability, maintainability, security, and operational excellence.
 
 ---
 
@@ -27,6 +48,9 @@ The goal of Nexus is to create a unified developer experience where users can:
 * AI-Assisted Diagnostics
 * Infrastructure Provisioning
 * Multi-Environment Deployment Support
+* Deployment Pipelines
+* Build Orchestration
+* Developer Self-Service Capabilities
 
 ---
 
@@ -43,7 +67,7 @@ Several enterprise-grade project ideas were evaluated:
 
 ### Final Choice
 
-***Nexus – Internal Developer Platform***
+**Nexus – Internal Developer Platform**
 
 ### Why Nexus?
 
@@ -55,7 +79,11 @@ The project aligns with modern software engineering trends and provides exposure
 * Kubernetes Ecosystem
 * Observability
 * Developer Experience (DevEx)
-* Security and Infrastructure Automation
+* Security Engineering
+* Infrastructure Automation
+* Deployment Orchestration
+
+The primary objective is not merely feature development but learning how modern enterprise platforms are designed, built, secured, deployed, and operated.
 
 ---
 
@@ -70,6 +98,25 @@ The project aligns with modern software engineering trends and provides exposure
 | RAM              | 8 GB              |
 | Storage          | SSD               |
 | Architecture     | x64               |
+
+### Development Strategy
+
+GitHub Codespaces was evaluated during project planning.
+
+Decision:
+
+```text
+Local Development First
+```
+
+Reasoning:
+
+* Hardware is sufficient for foundation phases.
+* Better understanding of runtime dependencies.
+* Stronger understanding of environment setup.
+* Easier debugging during early development.
+
+Future migration to cloud development environments remains an option.
 
 ---
 
@@ -100,7 +147,7 @@ OpenJDK 21 LTS
 
 ### Visual Studio Code
 
-Primary IDE used for development.
+Primary development IDE.
 
 #### Extensions
 
@@ -108,7 +155,7 @@ Primary IDE used for development.
 
 ### PostgreSQL
 
-Database used for application persistence.
+Primary relational database.
 
 Version:
 
@@ -124,7 +171,7 @@ Get-Service *postgres*
 
 ### pgAdmin
 
-Used for PostgreSQL administration and management.
+Used for PostgreSQL administration.
 
 Status:
 
@@ -139,23 +186,62 @@ Installed and Operational
 Repository Details:
 
 ```text
-Repository: nexus
-Platform: GitHub
-Owner: sohammaity-1
+Repository : nexus
+Platform   : GitHub
+Owner      : sohammaity-1
 ```
 
 Purpose:
 
-* Source Code Management
+* Source Control
 * Documentation
-* Version Control
+* Collaboration
 * CI/CD Integration
+* Release Management
+
+---
+
+## Technology Stack
+
+### Backend
+
+* Java 21
+* Spring Boot 3.5.x
+* Spring Web
+* Spring Data JPA
+* Spring Security
+
+### Database
+
+* PostgreSQL 14
+* Flyway
+
+### Build Tool
+
+* Maven
+
+### Development Tools
+
+* VS Code
+* Git
+* GitHub
+* pgAdmin
+
+### Future Technologies
+
+* Docker
+* Kubernetes
+* Prometheus
+* Grafana
+* Loki
+* OpenTelemetry
+* GitHub Actions
 
 ---
 
 ## Spring Boot Project Initialization
 
-The project was generated using Spring Initializr.
+Generated using Spring Initializr.
 
 ### Configuration
 
@@ -165,7 +251,7 @@ Language     : Java
 Spring Boot  : 3.5.x
 Packaging    : Jar
 Java Version : 21
-Config Type  : YAML
+Configuration: YAML
 ```
 
 ### Metadata
@@ -183,35 +269,136 @@ Package Name : com.soham.nexus
 
 ### Spring Web
 
-Provides support for building REST APIs.
+Provides REST API capabilities.
 
 ### Spring Data JPA
 
-Handles ORM and database persistence.
+Provides ORM and repository abstractions.
 
 ### PostgreSQL Driver
 
-Enables communication between Spring Boot and PostgreSQL.
+Enables PostgreSQL connectivity.
 
 ### Spring Security
 
-Provides authentication and authorization mechanisms.
+Provides authentication and authorization.
 
 ### Validation
 
-Supports request and input validation.
+Provides request validation support.
 
-### Flyway Migration
+### Flyway
 
-Manages version-controlled database schema migrations.
+Database schema versioning.
 
 ### Spring Boot Actuator
 
-Provides health checks, metrics, and monitoring endpoints.
+Health checks, metrics, and operational endpoints.
 
 ### Lombok
 
-Reduces boilerplate code.
+Boilerplate reduction.
+
+---
+
+## Architecture Decisions
+
+### Architectural Style
+
+Nexus follows a:
+
+```text
+Modular Monolith
+```
+
+### Why Modular Monolith?
+
+Benefits:
+
+* Faster development
+* Simpler deployment
+* Lower operational overhead
+* Easier debugging
+* Easier local development
+* Future migration path to microservices if required
+
+---
+
+### Package Organization
+
+Nexus follows:
+
+```text
+Package By Feature
+```
+
+instead of:
+
+```text
+Package By Layer
+```
+
+### Implemented Structure
+
+```text
+com.soham.nexus
+
+├── common
+│   └── entity
+│
+├── configuration
+│
+├── project
+│
+├── security
+│
+├── user
+│   ├── controller
+│   ├── dto
+│   ├── entity
+│   ├── repository
+│   └── service
+│
+└── NexusApplication
+```
+
+### Benefits
+
+* Higher cohesion
+* Clear ownership
+* Easier scaling
+* Better maintainability
+* Improved domain separation
+
+---
+
+## Database Strategy
+
+### Database
+
+```text
+PostgreSQL
+```
+
+### Migration Framework
+
+```text
+Flyway
+```
+
+### Principles
+
+* Database changes are treated as code.
+* Applied migrations are immutable.
+* New changes require new migration versions.
+* Manual schema changes are avoided.
+
+### Current Migrations
+
+```text
+V1__create_users.sql
+V2__add_updated_at_to_users.sql
+```
 
 ---
 
@@ -228,44 +415,35 @@ mvnw.cmd
 
 Purpose:
 
-Ensures all developers use the same Maven version regardless of local installations.
-
-```text
-mvnw      -> Linux/macOS
-mvnw.cmd  -> Windows
-```
+Ensures consistent Maven versions across environments.
 
 ---
 
 ### Spring Boot Auto Configuration
 
-#### Observation
+Observation:
 
-After adding JPA and PostgreSQL dependencies, Spring Boot automatically attempted to configure a datasource.
+After adding JPA and PostgreSQL dependencies, Spring Boot automatically attempted datasource initialization.
 
-#### Startup Error
+Startup Error:
 
 ```text
 Failed to configure a DataSource
 ```
 
-#### Cause
+Root Cause:
 
-Datasource configuration properties were not provided.
+Datasource properties were missing.
 
-#### Learning
+Learning:
 
-Spring Boot automatically configures components based on dependencies present in the project.
-
-This mechanism is known as **Auto Configuration**.
+Spring Boot automatically configures components based on dependencies present on the classpath.
 
 ---
 
 ### Spring Security Auto Configuration
 
-#### Observation
-
-Accessing:
+Observation:
 
 ```text
 http://localhost:8080
@@ -277,94 +455,179 @@ redirected to:
 http://localhost:8080/login
 ```
 
-instead of returning a 404 response.
-
-#### Reason
-
-The following dependency was included:
+Reason:
 
 ```xml
 spring-boot-starter-security
 ```
 
-Spring Boot automatically enabled:
+was present.
+
+Learning:
+
+Spring Security automatically enables:
 
 * Authentication
 * Authorization
 * Login Page
 * Security Filters
 
-## Learnings ##
+without custom configuration.
 
-When Spring Security is present on the classpath, Spring Boot applies a default security configuration.
+---
 
-Without custom configuration:
+### Flyway Migration Lifecycle
 
-* All endpoints are secured
-* A default login page is generated
-* A temporary user account is created
+Migration Issue Encountered:
 
-This behavior will later be replaced with JWT-based authentication.
+```text
+V1_create_users.sql
+```
+
+was incorrectly named.
+
+Expected:
+
+```text
+V1__create_users.sql
+```
+
+Result:
+
+Migration inconsistency and checksum mismatch.
+
+Learning:
+
+Applied Flyway migrations are immutable.
+
+Schema evolution must occur through new migration versions.
+
+---
+
+## Current Database State
+
+### Tables
+
+```text
+users
+flyway_schema_history
+```
+
+### User Schema
+
+```text
+id
+username
+email
+password
+created_at
+updated_at
+```
 
 ---
 
 ## Current Project Status
 
-### Completed
+### Phase 0 – Project Inception ✅
 
-* Project planning and architecture selection
-* Git and GitHub setup
-* Java installation
+Completed:
+
+* Product vision established
+* Technology stack selected
+* Architecture direction finalized
+* Development roadmap created
+
+---
+
+### Phase 1 – Foundation & Platform Bootstrap ✅
+
+Completed:
+
+* Git & GitHub setup
+* Java environment setup
 * PostgreSQL installation
 * pgAdmin setup
-* Spring Boot project generation
-* Dependency configuration
-* Initial application startup
-
-### In Progress
-
-* PostgreSQL database creation
+* Spring Boot initialization
 * Datasource configuration
-* Application configuration setup
+* Spring Security integration
+* Flyway integration
+* Initial database versioning
+* Database schema creation
 
-### Upcoming Tasks
+---
 
-#### Database Layer
+### Phase 2 – Identity & Access Management 🚧
 
-* Create Nexus database
-* Configure datasource in `application.yml`
-* Configure Flyway
-* Create first migration script
+Completed:
 
-#### Security
+* BaseEntity
+* User Entity
+* UserRepository
+* UserService
+* RegisterUserRequest DTO
+* Flyway V2 migration
+* Package-by-feature structure
 
-* Implement User module
-* Add JWT Authentication
-* Configure authorization rules
+In Progress:
 
-#### Core Platform Features
+* User Registration Workflow
+* Registration API
+* Validation Layer
 
-* Project Management Module
+Upcoming:
+
+* Password Hashing (BCrypt)
+* Authentication
+* JWT Implementation
+* Authorization
+* RBAC
+
+---
+
+## Roadmap
+
+### Identity & Access Management
+
+* User Registration
+* Login API
+* Password Hashing
+* JWT Authentication
+* JWT Authorization
+* Role-Based Access Control
+
+### Core Platform Features
+
+* Project Management
 * Repository Management
 * Build Management
 * Deployment Management
 
-#### Platform Engineering Features
+### Platform Engineering Features
 
+* Docker Containerization
 * Kubernetes Integration
-* Container Management
 * CI/CD Pipelines
 * Infrastructure Automation
 
-#### Observability
+### Observability
 
 * Metrics Collection
-* Logging
+* Centralized Logging
 * Monitoring Dashboards
 * Alerting
+* Distributed Tracing
 
 ---
 
 ## Project Goal
 
-The primary objective of Nexus is to gain practical experience in designing and building an enterprise-grade Internal Developer Platform while learning modern backend engineering, DevOps, platform engineering, security, cloud-native development, and observability practices through a real-world project.
+The primary objective of Nexus is to gain practical experience in designing and building an enterprise-grade Internal Developer Platform while applying modern backend engineering, security, DevOps, platform engineering, cloud-native architecture, and observability practices through a real-world product journey.
+
+The project emphasizes:
+
+* Engineering Discipline
+* Architecture First Thinking
+* Production-Oriented Development
+* Incremental Delivery
+* Long-Term Maintainability
+* Continuous Learning
